@@ -10,13 +10,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import api from './services/api';
+import api from "./services/api";
 
 export default function App() {
   const [repositories, setRepository] = useState([]);
 
   useEffect(() => {
-    api.get('repositories').then(response => {
+    api.get("repositories").then((response) => {
       setRepository(response.data);
     });
   }, []);
@@ -28,7 +28,9 @@ export default function App() {
 
     const newRepositories = repositories;
 
-    const repositoryIndex = newRepositories.findIndex(repo => repo.id === repoId);
+    const repositoryIndex = newRepositories.findIndex(
+      (repo) => repo.id === repoId
+    );
 
     newRepositories[repositoryIndex].likes = likes;
 
@@ -41,14 +43,17 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <FlatList
           data={repositories}
-          keyExtractor={repository => repository.id}
+          keyExtractor={(repository) => repository.id}
           renderItem={({ item: repository }) => (
             <View style={styles.repositoryContainer}>
               <Text style={styles.repository}>{repository.title}</Text>
 
               <View style={styles.techsContainer}>
-                {repository.techs.map(tech => (
-                  <Text key={tech} style={styles.tech}> {tech} </Text>
+                {repository.techs.map((tech) => (
+                  <Text key={tech} style={styles.tech}>
+                    {" "}
+                    {tech}{" "}
+                  </Text>
                 ))}
               </View>
 
@@ -56,7 +61,7 @@ export default function App() {
                 <Text
                   style={styles.likeText}
                   // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
-                  testID={repository.id}
+                  testID={`repository-likes-${repository.id}`}
                 >
                   {`${repository.likes} curtidas`}
                 </Text>
@@ -66,7 +71,7 @@ export default function App() {
                 style={styles.button}
                 onPress={() => handleLikeRepository(repository.id)}
                 // Remember to replace "1" below with repository ID: {`like-button-${repository.id}`}
-                testID={repository.id}
+                testID={`like-button-${repository.id}`}
               >
                 <Text style={styles.buttonText}>Curtir</Text>
               </TouchableOpacity>
